@@ -1,61 +1,27 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour {
-
-    public InputActionAsset InputActions;
+public class PlayerMovement : BaseInputManager { // PlayerInput  
 
     [Header("Movement")]
     public Rigidbody rb;
-    public float moveSpeed;
-    
-
+    public float moveSpeed; 
 
     [Header("Look")]
     public Transform cameraTransform; // Drag your Camera here
     public float lookSensitivity = 0.1f;
     private float verticalRotation = 0f;
 
-
     private Vector2 moveDirection;
     private Vector2 lookDirection;
 
-
-    private InputAction InteractionAction; // Click F
-    private InputAction MoveAction;       // Move ZQSD / WASD / ^<v>
-    private InputAction LookAction;
-    private InputAction ClickAction;
-
-    // Could use "InputActionReference" instead of "InputAction" ?
-
-    private void Awake() {
-        InteractionAction = InputActions.FindAction("Interaction");
-        MoveAction = InputActions.FindAction("Move");
-        LookAction = InputActions.FindAction("Look");
-        ClickAction = InputActions.FindAction("Click");
+    protected override void Awake() {
+        base.Awake();
 
         // Lock and hide cursor
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-    }
-
-    private void OnEnable() {
-        InteractionAction.performed += InteractionPerformed;
-        InteractionAction.canceled += InteractionCanceled;
-        MoveAction.performed += MovePerformed;
-        LookAction.performed += LookPerformed;
-        ClickAction.performed += ClickPerformed;
-
-    }
-
-    private void OnDisable() {
-        InteractionAction.performed -= InteractionPerformed;
-        InteractionAction.canceled -= InteractionCanceled;
-        MoveAction.performed -= MovePerformed;
-        LookAction.performed -= LookPerformed;
-        ClickAction.performed -= ClickPerformed;
-
-    }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    } 
 
     private void Update() {
         moveDirection = MoveAction.ReadValue<Vector2>();
@@ -76,22 +42,4 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 move = (transform.right * moveDirection.x + transform.forward * moveDirection.y) * moveSpeed;
         rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
     }
-
-
-    private void InteractionPerformed(InputAction.CallbackContext context) {
-        Debug.Log("InteractionPerformed");
-    }
-    private void InteractionCanceled(InputAction.CallbackContext context) {
-        Debug.Log("InteractionCanceled");
-    }
-    private void MovePerformed(InputAction.CallbackContext context) {
-        Debug.Log("MovePerformed");
-    }
-    private void LookPerformed(InputAction.CallbackContext context) {
-        Debug.Log("LookPerformed");
-    }
-    private void ClickPerformed(InputAction.CallbackContext context) {
-        Debug.Log("ClickPerformed");
-    }
-
 }
