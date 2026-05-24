@@ -5,7 +5,7 @@ public abstract class BaseInputManager : MonoBehaviour { // PlayerInput
 
     public InputActionAsset InputActions;
 
-    protected InputAction InteractionAction;  // Click F
+    protected InputAction InteractionAction;  // Click F  / Left Click
     protected InputAction MoveAction;        // Move ZQSD / WASD / ^<v>
     protected InputAction LookAction;       // Mouse
     protected InputAction ClickAction;     // Unused
@@ -36,19 +36,19 @@ public abstract class BaseInputManager : MonoBehaviour { // PlayerInput
     }
 
     protected virtual void InteractionPerformed(InputAction.CallbackContext context) {
-        Debug.Log("InteractionPerformed");
+        //Debug.Log("InteractionPerformed");
     }
     protected virtual void InteractionCanceled(InputAction.CallbackContext context) {
-        Debug.Log("InteractionCanceled");
+        //Debug.Log("InteractionCanceled");
     }
     protected void MovePerformed(InputAction.CallbackContext context) {
-        Debug.Log("MovePerformed");
+        //Debug.Log("MovePerformed");
     }
     protected void LookPerformed(InputAction.CallbackContext context) {
        // Debug.Log("LookPerformed");
     }
     protected void ClickPerformed(InputAction.CallbackContext context) {
-        Debug.Log("ClickPerformed");
+        //Debug.Log("ClickPerformed");
     }
 
 }
