@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BallData", menuName = "Scriptable Objects/BallData")]
 public class BallData : ScriptableObject {
 
-    public string BallName ;
+    public string BallName;
 
     public GameObject BallPrefab = null;
 
@@ -12,5 +12,11 @@ public class BallData : ScriptableObject {
     public float SpeedMultiplier = 1;   // Affects the speed of the ball
     public int Money = 1;               //Amount of "Money" when scoring
     public int Xp = 1;                  //Amount of "Xp" when scoring
+
+    [Header("Audio")]
+    public AudioClip CollisionSound;
+    public AudioClip ExplodeSound;
+
+    public float VelocityThreshold = 2f; // Avoid tiny bumps
 
 }

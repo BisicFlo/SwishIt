@@ -19,3 +19,6 @@ MonoBehaviour:
   SpeedMultiplier: 1
   Money: 5
   Xp: 5
+  CollisionSound: {fileID: 8300000, guid: ef563d1e76cbcac4ebc6ab49daf707f1, type: 3}
+  ExplodeSound: {fileID: 8300000, guid: 4a64ee42e91173f4d938c0e4465ae357, type: 3}
+  VelocityThreshold: 2
