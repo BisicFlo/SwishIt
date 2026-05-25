@@ -1,8 +1,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class RotateSimple : MonoBehaviour
-{
+public class RotateSimple : MonoBehaviour {
     public enum AxisType { X, Y, Z };
     [Tooltip("Axis in World Space along which the object will rotate")]
     public AxisType Axis;
@@ -23,7 +22,7 @@ public class RotateSimple : MonoBehaviour
 
     void Update() {
         //  single-axis local rotation 
-        if      (rotationType == 1) myTransform.Rotate(rotationSpeed * Time.deltaTime, 0, 0, Space.Self);
+        if (rotationType == 1) myTransform.Rotate(rotationSpeed * Time.deltaTime, 0, 0, Space.Self);
         else if (rotationType == 2) myTransform.Rotate(0, rotationSpeed * Time.deltaTime, 0, Space.Self);
         else if (rotationType == 3) myTransform.Rotate(0, 0, rotationSpeed * Time.deltaTime, Space.Self);
     }

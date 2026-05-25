@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-
 /// <summary>
 /// Used for Buttons / levers / ...
 /// </summary>
@@ -15,7 +14,7 @@ public class Interactable : MonoBehaviour {
         onInteract?.Invoke();
     }
 
-    // Optional: You can also expose a context menu option for testing
+    // Optional
     [ContextMenu("Trigger Interaction")]
     private void TriggerInteractionDebug() {
         Interact();
