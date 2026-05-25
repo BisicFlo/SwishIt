@@ -4,24 +4,33 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Scriptable Objects/PlayerData")]
 public class PlayerData : ScriptableObject {
 
+    public BallData DefaultBall; // default Ball
+
+    public BallData SelectedBall; // type of ball the player will be using / can be changed
+
     [SerializeField] private int StartingHealth;
     [SerializeField] private int StartingMoney;
     [SerializeField] private int StartingXp;
     [SerializeField][Range(1, 10)] private int StartingLevel = 1;
 
-    public int Health { get; private set; }
+    public int Health { get; private set; } // Not Used 
     public int Money { get; private set; }
-    public int Xp { get; private set; }
-    public int Level { get; private set; } = 1;
+    public int Xp { get; private set; } // Not Used 
+    public int Level { get; private set; } = 1; // Not Used 
 
-
-    public readonly int[] xpRequired = { 2, 2, 6, 10, 20, 36, 60, 68, 80 };
+    public readonly int[] xpRequired = { 2, 2, 6, 10, 20, 36, 60, 68, 80 }; // Not Used 
 
     // Events
     [HideInInspector] public UnityEvent OnAnyStatChanged = new UnityEvent();
 
+    [HideInInspector] public UnityEvent OnThrow = new UnityEvent();
+
+    [HideInInspector] public UnityEvent OnBallChanged = new UnityEvent();
+
+
     private void OnEnable() {
-        Debug.Log("OnEnablePLayerData");
+        //Debug.Log("OnEnablePLayerData");
+        SelectedBall = DefaultBall;
         Health = StartingHealth;
         Money = StartingMoney;
         Xp = StartingXp;
@@ -58,5 +67,12 @@ public class PlayerData : ScriptableObject {
             OnAnyStatChanged?.Invoke();
             return true;
         }
+    }
+    public void Throw() {
+        OnThrow?.Invoke();
+    }
+    public void ChangeBall(BallData ballData) {
+        SelectedBall = ballData;
+        OnBallChanged?.Invoke();
     }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9615d3f01ce9d342a8319f1650b4b9a, type: 3}
   m_Name: Player1
   m_EditorClassIdentifier: 
+  SelectedBall: {fileID: 11400000, guid: e8120ec3c983bdc4893b55bd3afd697b, type: 2}
   StartingHealth: 10
   StartingMoney: 0
   StartingXp: 0
@@ -31,3 +32,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnThrow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBallChanged:
+    m_PersistentCalls:
+      m_Calls: []

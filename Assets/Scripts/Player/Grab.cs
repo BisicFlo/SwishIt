@@ -3,29 +3,27 @@ using UnityEngine.InputSystem;
 
 public class Grab : BaseInputManager {
 
-    [SerializeField] private PlayerData Player; // Reference to the player ScriptableObject
+    [Header("PlayerData")]
+    [SerializeField] private PlayerData playerData; // Reference to the player ScriptableObject
 
+    [Header("Config")]
     [SerializeField] private Collider playerCollider;
     [SerializeField] private Transform holdPos;
     [SerializeField] private Transform ViewDirection;
     [SerializeField] private Transform ThrowDirection;
-
-    //[SerializeField] private float throwForce = 500f;    //force at which the object is thrown at
     [SerializeField] private float pickUpRange = 5f;     //how far the player can pickup the object from
-    [SerializeField] private GameObject heldObj;        //object 
-    [SerializeField] private Rigidbody heldObjRb;      //rigidbody of object we pick up
-    [SerializeField] private Vector3 heldObjScale;        //DefaultScale 
-
 
     [Header("Throw")]
     [SerializeField] private float minThrowForce = 5f;
     [SerializeField] private float maxThrowForce = 800f;
     [SerializeField] private float maxChargeTime = 2f;
 
+    private GameObject heldObj;        //object 
+    private Rigidbody heldObjRb;      //rigidbody of object we pick up
+    private Vector3 heldObjScale;    //DefaultScale 
+
     private float chargeStartTime;
     private bool isCharging = false;
-
-
     private float ballSpeedMultiplier;
 
     private void Update() {
@@ -59,20 +57,20 @@ public class Grab : BaseInputManager {
                     PickUpObject(go);
                     BallSetup(go);
                 }
-            }
+                else if (go.CompareTag("Interactable")) {
+                    Interact(go);
+                }
+            } 
         }
         else {
-            // ThrowObject();
             isCharging = true;
             chargeStartTime = Time.time;
         }
     }
 
-
     void PickUpObject(GameObject pickUpObj) {
         Debug.Log("Grab : " + pickUpObj.name);
-        if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
-        {
+        if (pickUpObj.GetComponent<Rigidbody>()) {
             heldObj = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldObjRb = pickUpObj.GetComponent<Rigidbody>(); //assign Rigidbody
             heldObjRb.isKinematic = true;
@@ -93,11 +91,11 @@ public class Grab : BaseInputManager {
         ThrowObject(throwForce);
         isCharging = false;
 
+        playerData.Throw(); // trigger Event
     }
 
     void ThrowObject(float throwForce) {
         heldObj.transform.localScale = heldObjScale;
-
         //Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), playerCollider, false); // temp
         heldObj.layer = 0;
         heldObjRb.isKinematic = false;
@@ -106,6 +104,13 @@ public class Grab : BaseInputManager {
         heldObj = null;
     }
 
+    void Interact(GameObject go ) {
+         Interactable interactable = go.GetComponent<Interactable>();
+
+        if (interactable != null) {
+            interactable.Interact(); // It triggers the event 
+        }
+    }
 
     private void BallSetup(GameObject ballObject) {
 
@@ -113,11 +118,7 @@ public class Grab : BaseInputManager {
 
         if (ball == null) return;
 
-        ball.Thrower = Player;
-
-        ballSpeedMultiplier = ball.speedMultiplier;
-
-        
+        ball.Thrower = playerData;
+        ballSpeedMultiplier = ball.speedMultiplier;        
     }
-
 }

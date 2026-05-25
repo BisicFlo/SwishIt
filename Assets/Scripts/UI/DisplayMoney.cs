@@ -15,10 +15,6 @@ public class DisplayMoney : MonoBehaviour {
         playerData.OnAnyStatChanged.RemoveListener(UpdateUI); 
     }
 
-    //private void UpdateUI(int value) {
-    //    textDisplay.text = value.ToString();
-    //}
-
     private void UpdateUI() {
         textDisplay.text = playerData.Money.ToString();
     }

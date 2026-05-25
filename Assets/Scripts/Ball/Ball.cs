@@ -1,14 +1,28 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Ball : MonoBehaviour {
 
-    public PlayerData Thrower; // Reference to the player who throw this ball / Set by "Grab"
+    [SerializeField] private BallData ballData; // used to init values 
 
-    public float speedMultiplier = 1; // Affects the speed of the ball
+    [HideInInspector] public PlayerData Thrower; // Reference to the player who throw this ball / Set by "Grab"
 
-    public int Money = 1; //Amount of "Money" when scoring
+    [HideInInspector] public UnityEvent OnThrown ;
 
-    public int Xp = 1; //Amount of "Xp" when scoring
+    [HideInInspector] public UnityEvent OnHit;
+
+    [HideInInspector] public float speedMultiplier = 1; // Affects the speed of the ball
+
+    private int Money = 1; //Amount of "Money" when scoring
+
+    private int Xp = 1; //Amount of "Xp" when scoring
+
+
+    private void OnEnable() {
+        this.speedMultiplier = ballData.SpeedMultiplier;
+        this.Money = ballData.Money;
+        this.Xp = ballData.Xp;
+    }
 
 
     private void OnTriggerEnter(Collider other) {
@@ -21,4 +35,9 @@ public class Ball : MonoBehaviour {
             }
         }
     }
+    private void OnCollisionEnter(Collision collision) {
+        OnHit?.Invoke();
+    }
+
+
 }
